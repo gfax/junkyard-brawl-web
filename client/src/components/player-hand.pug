@@ -1,0 +1,4 @@
+div
+  p This is the player's hand
+  .cards(v-for="card in hand", :key="card.id")
+    player-card.card(:card="card", :disabled="false")

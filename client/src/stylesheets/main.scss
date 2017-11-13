@@ -1,0 +1,107 @@
+@import "compass";
+@import "variables";
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900|Dosis:300,400,600,700,800|Droid+Sans:400,700|Lato:300,400,700,900|PT+Sans:400,700|Ubuntu:300,400,500,700|Open+Sans:400,300,600,700|Roboto:400,300,500,700,900|Roboto+Condensed:400,300,700|Open+Sans+Condensed:300,700|Work+Sans:400,300,700|Play:400,700|Maven+Pro:400,500,700,900&subset=latin,latin-ext");
+
+* {
+  @include box-sizing(border-box);
+}
+
+html {
+  background-color: $color-background;
+  color: $color-text-light;
+  font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
+  font-size: 16px;
+  //font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+}
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+
+#app {
+  margin: 2em;
+}
+
+.info {
+  border-bottom: 1px solid #555;
+  padding-bottom: 1em;
+  text-align: center;
+
+  > div {
+    display: inline-block;
+    width: 200px;
+
+    .label {
+      margin-right: 5px;
+    }
+
+    .value {
+      font-weight: bold;
+    }
+  }
+}
+
+.splash {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  .overlay {
+    background-color: rgba(#000, 0.6);
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .content {
+    background-color: rgba(#333, 0.9);
+    bottom: 0;
+    height: 200px;
+    left: 0;
+    margin: auto;
+    padding: 1em;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 400px;
+
+    @include border-radius(10px);
+    @include box-shadow(5px 5px 20px rgba(black, 0.8));
+
+    .title {
+      font-size: 1.8em;
+      padding: 0.5em;
+    }
+
+    .score {
+      padding: 0.5em;
+    }
+
+    button {
+      background-color: #444;
+      border: 1px solid #555;
+      color: white;
+      font-size: 1.4em;
+      margin-top: 1em;
+      padding: 5px 20px;
+
+      @include border-radius(4px);
+    }
+  }
+}

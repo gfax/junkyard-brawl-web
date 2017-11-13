@@ -1,0 +1,5 @@
+.card(:class="{ flipped: card.name, disabled: card.disabled }")
+  .back
+  .front
+    p {{ card.name }}
+    p {{ card.type.toUpperCase() }}

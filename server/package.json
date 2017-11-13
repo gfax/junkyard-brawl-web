@@ -1,0 +1,31 @@
+{
+  "name": "junkyard-brawl-web-server",
+  "version": "0.0.0",
+  "description": "Websocket server for hosting games of Junkyard Brawl",
+  "main": "server/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gfax/junkyard-brawl-web"
+  },
+  "author": "Jay Thomas <jay@gfax.ch>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/gfax/junkyard-brawl-web/issues"
+  },
+  "homepage": "https://github.com/gfax/junkyard-brawl-web#readme",
+  "scripts": {
+    "eslint": "eslint .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "start": "node .",
+    "test": "npm run eslint"
+  },
+  "dependencies": {
+    "junkyard-brawl": "https://github.com/gfax/junkyard-brawl.git",
+    "validatorjs": "^3.13.5",
+    "ws": "^3.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.10.0",
+    "eslint-plugin-unicorn": "^2.1.2"
+  }
+}

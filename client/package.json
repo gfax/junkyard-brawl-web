@@ -1,0 +1,53 @@
+{
+  "name": "junkyard-brawl-web-client",
+  "version": "0.0.0",
+  "description": "Web app for playing Junkyard Brawl",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gfax/junkyard-brawl-web"
+  },
+  "author": "Jay Thomas <jay@gfax.ch>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/gfax/junkyard-brawl-web/issues"
+  },
+  "homepage": "https://github.com/gfax/junkyard-brawl-web#readme",
+  "scripts": {
+    "build": "webpack -p --bail",
+    "eslint": "eslint .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "start": "webpack-dev-server",
+    "test": "npm run eslint && npm run build"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "compass-mixins": "^0.12.10",
+    "copy-webpack-plugin": "^4.2.0",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.9.0",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-unicorn": "^2.1.2",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
+    "node-sass": "^4.5.3",
+    "pug": "^2.0.0-rc.4",
+    "pug-lint-loader": "^0.0.4",
+    "pug-loader": "^2.3.0",
+    "resolve-url-loader": "^2.1.1",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "stylelint": "^8.2.0",
+    "stylelint-order": "^0.7.0",
+    "stylelint-scss": "^2.1.0",
+    "stylelint-webpack-plugin": "^0.9.0",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
+  },
+  "dependencies": {
+    "vue": "^2.4.2",
+    "vue-router": "^2.7.0"
+  }
+}
