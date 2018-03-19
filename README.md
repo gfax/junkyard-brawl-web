@@ -12,6 +12,8 @@
 
 ## Overview
 
+**Status: currently in development.**
+
 This is the server-side and client-side applications for playing Junkyard Brawl in your favorite device's browser.
 The backend server is written in nodejs and the frontend is written with [Vue.js](https://vuejs.org/) and bundled with [webpack](https://webpack.js.org/).
 

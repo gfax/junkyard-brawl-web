@@ -20,7 +20,8 @@
     "test": "npm run eslint"
   },
   "dependencies": {
-    "junkyard-brawl": "https://github.com/gfax/junkyard-brawl.git",
+    "junkyard-brawl": "^0.3.0",
+    "uuid": "^3.2.1",
     "validatorjs": "^3.13.5",
     "ws": "^3.2.0"
   },

@@ -263,7 +263,7 @@ rules:
   no-trailing-spaces: error
   no-undef: error
   no-undef-init: error
-  no-undefined: error
+  no-undefined: off
   no-underscore-dangle: error
   no-unexpected-multiline: error
   no-unmodified-loop-condition: error

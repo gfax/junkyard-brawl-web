@@ -1,0 +1,48 @@
+@import 'compass/css3/border-radius';
+@import 'compass/css3/box-shadow';
+@import 'variables';
+
+.game-modal {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  .overlay {
+    background-color: rgba(darken($color-background, 10%), 0.9);
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+  }
+
+  .content {
+    background-color: rgba($color-background, 0.9);
+    bottom: 0;
+    height: 200px;
+    left: 0;
+    margin: auto;
+    padding: 1em;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 400px;
+    z-index: 2;
+
+    @include border-radius(10px);
+    @include box-shadow(5px 5px 20px rgba(black, 0.8));
+
+    .title {
+      font-size: 1.8em;
+      padding: 0.5em;
+    }
+
+    .score {
+      padding: 0.5em;
+    }
+  }
+}

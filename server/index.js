@@ -1,18 +1,30 @@
-const JunkyardBrawl = require('junkyard-brawl')
-const util = require('./util')
+const uuid = require('uuid/v4')
+const { getGame, setSocket } = require('./state')
 const validator = require('./validator')
 const WebSocket = require('ws')
 
 const wss = new WebSocket.Server({ port: 4000 })
-// Object to store game instances in
-const games = {}
 
 wss.on('connection', connection)
 
-function connection(ws) {
+function connection(ws, req) {
   // Keep track of which game the client is referencing
-  let id = null
+  ws.gameId = req.url.replace(/^\//, '')
+  if (!ws.gameId) {
+    ws.send(JSON.stringify([
+      'error',
+      'No game ID passed on connection: "example.com/gameid"'
+    ]))
+    ws.terminate()
+    return
+  }
+  // Matching player ID and socket ID
+  ws.id = uuid()
+  setSocket(ws.id, ws)
+
   ws.on('message', onMessage)
+  ws.on('error', removePlayer)
+  ws.on('close', removePlayer)
 
   function onMessage(msg) {
     console.log(typeof msg, msg)
@@ -24,13 +36,15 @@ function connection(ws) {
       return
     }
 
-    if (!Array.isArray(parsedMsg)) {
+    if (!Array.isArray(parsedMsg) || !parsedMsg.length) {
       return
     }
     const [code, payload] = parsedMsg
     const codes = {
-      'game:start': startGame,
-      'player:join': addPlayer
+      'game:start': require('./responses/game-start'),
+      'player:bot': require('./responses/player-bot'),
+      'player:join': require('./responses/player-join'),
+      'player:language': require('./responses/player-language')
     }
     if (codes[code]) {
       const validation = validator(code, payload)
@@ -38,58 +52,16 @@ function connection(ws) {
         ws.send(JSON.stringify(['error', validation.errors]))
         return
       }
-      codes[code](payload)
+      codes[code](ws, payload)
     }
   }
 
-  function addPlayer({ player, gameId }) {
-    id = gameId
-    const game = games[id]
+  function removePlayer() {
+    const game = getGame(ws.gameId)
     if (game) {
-      game.addPlayer(ws, player.name)
-      return
-    }
-    games[id] = new JunkyardBrawl(
-      ws,
-      player.name,
-      generateAnnounceCallback(id),
-      generateWhisperCallback(id)
-    )
-    games[id].announce('game:created')
-  }
-
-  function generateAnnounceCallback(gameId) {
-    return (code, message) => {
-      const game = games[gameId]
-      if (!game) {
-        return
-      }
-      game.players.forEach(player => player.id.send(JSON.stringify([code, message])))
-      console.log(` >> ${code} ${message}`)
-    }
-  }
-
-  function generateWhisperCallback(gameId) {
-    return (playerId, code, message, messageProps) => {
-      const game = games[gameId]
-      if (!game) {
-        return
-      }
-      playerId.send(JSON.stringify([code, message, {
-        player: util.scrubPlayer(messageProps.player)
-      }]))
-      console.log(` >> ${messageProps.player.name}: ${code} ${message}`)
-    }
-  }
-
-  function startGame() {
-    const game = games[id]
-    if (game) {
-      game.start()
-      game.players.forEach((player) => {
-        console.log(`gonna whisper status to ${player.name}`)
-        game.whisperStatus(player)
-      })
+      game.removePlayer(ws.id)
+      // Mark the socket for garbage collection
+      setSocket(ws.id, null)
     }
   }
 

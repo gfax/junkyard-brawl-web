@@ -1,3 +1,10 @@
 div
-  p game page/component
+  game-modal(:score="score", v-if="stopped")
+  game-info(:score="score")
+  div(v-for="opponent in opponents")
+    p {{ opponent.name }}
+    opponent-discard(:discard="opponent.discard")
   player-hand(:hand="player.hand")
+  button(@click="start", type="button", v-if="!started") Start
+  button(@click="stop", type="button", v-if="started && !stopped") Stop
+  button(@click="addBot", type="button") Add bot

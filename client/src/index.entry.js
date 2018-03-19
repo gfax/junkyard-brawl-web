@@ -23,12 +23,12 @@ const routerConfig = new vueRouter({
   mode: 'hash',
   routes: [
     {
-      name: 'Create a game',
+      name: 'home',
       path: '/',
       component: require('./components/home')
     },
     {
-      name: 'Game in progress...',
+      name: 'game',
       path: '/games/:gameId',
       component: require('./components/game')
     }

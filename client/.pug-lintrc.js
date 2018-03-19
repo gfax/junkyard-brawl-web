@@ -38,7 +38,10 @@ module.exports = {
   ],
   requireStrictEqualityOperators: true,
   validateAttributeQuoteMarks: '"',
-  validateAttributeSeparator: ', ',
+  validateAttributeSeparator: {
+    separator: ', ',
+    multiLineSeparator: ',\n  '
+  },
   validateDivTags: true,
   validateExtensions: true,
   validateIndentation: 2,

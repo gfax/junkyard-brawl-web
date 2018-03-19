@@ -1,3 +1,4 @@
 div
   p This is the main page (written in pug)
-  p Create a new game
+  router-link(:to="{ name: 'game', params: { gameId: randomGameName() }}")
+    button.uk-button.uk-button-default(type="button") Create a new game

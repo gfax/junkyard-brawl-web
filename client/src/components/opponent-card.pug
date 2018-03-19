@@ -1,4 +1,5 @@
-.player-card(:class="{ disabled: card.disabled }")
+.opponent-card(:class="{ flipped: card.name }")
+  .back
   .front
     p {{ card.name }}
     p {{ card.type.toUpperCase() }}

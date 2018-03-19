@@ -22,7 +22,7 @@ rules:
   block-opening-brace-space-after: always-single-line
   block-opening-brace-space-before: always
   color-hex-case: lower
-  #color-hex-length: long
+  color-hex-length: null
   color-no-invalid-hex: true
   comment-empty-line-before: null
   comment-no-empty: true
@@ -135,11 +135,7 @@ rules:
   selector-pseudo-element-colon-notation: single
   selector-pseudo-element-no-unknown: true
   selector-type-case: lower
-  selector-type-no-unknown:
-    - true
-    - ignoreTypes:
-      - /^w(d|m|t)-/
-      - chart-trade-dropdown
+  selector-type-no-unknown: null
   shorthand-property-no-redundant-values: true
   string-no-newline: true
   unit-case: lower

@@ -86,7 +86,6 @@ module.exports = {
                     modules: false,
                     // Polyfills are only needed for the following targets
                     targets: {
-                      // This is our advertised list of supported browsers
                       browsers: [
                         'last 2 Chrome versions',
                         'last 2 Firefox versions',
@@ -130,7 +129,8 @@ module.exports = {
                 // inside the directories listed below from first to last.
                 includePaths: [
                   path.resolve(__dirname, 'src', 'stylesheets'),
-                  path.resolve(__dirname, 'node_modules', 'compass-mixins', 'lib')
+                  path.resolve(__dirname, 'node_modules', 'compass-mixins', 'lib'),
+                  path.resolve(__dirname, 'node_modules')
                 ],
                 sourceMap: true
               }
