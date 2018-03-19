@@ -3,3 +3,9 @@ language: node_js
 node_js:
   - '6'
   - '8'
+
+script:
+  - cd server && npm install
+  - npm run test
+  - cd ../client && npm install
+  - npm run test
