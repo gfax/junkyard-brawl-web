@@ -3,23 +3,23 @@ const { getGame, getSocket } = require('./state')
 
 module.exports = {
   scrubGameData,
-  scrubOpponentData,
   scrubPlayerData
 }
 
 // We need to remove circular references and return
 // only the data needing to be sent over the socket.
-function scrubGameData(game) {
+function scrubGameData(game, playerSocket) {
   if (!game) {
     return game
   }
+  const language = playerSocket.language || game.language
   return {
     manager: {
       id: game.manager.id,
       name: game.manager.name
     },
-    dropouts: game.dropouts.map(scrubOpponentData),
-    players: game.players.map(scrubOpponentData),
+    dropouts: game.dropouts.map(player => scrubOpponentData(player, language)),
+    players: game.players.map(player => scrubOpponentData(player, language)),
     started: game.started ? game.started.valueOf() : false,
     stopped: game.stopped ? game.stopped.valueOf() : false,
     turns: game.turns
@@ -27,14 +27,14 @@ function scrubGameData(game) {
 }
 
 // We can know everything about the player but what is in their hand
-function scrubOpponentData(player) {
+function scrubOpponentData(player, language) {
   if (!player) {
     return player
   }
   return {
     id: player.id,
-    conditionCards: scrubCards(player.conditionCards),
-    discard: scrubCards(player.discard),
+    conditionCards: scrubCards(player.conditionCards, language),
+    discard: scrubCards(player.discard, language),
     extraTurns: player.extraTurns,
     name: player.name,
     hand: player.hand.map(card => ({ type: 'unknown' })),
@@ -55,7 +55,7 @@ function scrubPlayerData(player) {
   const playerSocket = getSocket(player.id)
   const game = getGame(playerSocket.gameId)
   const language = playerSocket.language || game.language
-  return Object.assign(scrubOpponentData(player), {
+  return Object.assign(scrubOpponentData(player, language), {
     hand: scrubCards(player.hand, language)
   })
 }
@@ -65,7 +65,8 @@ function scrubCards(cards, language) {
     return {
       id: card.id,
       name: getPhrase(`card:${card.id}`, language)(),
-      type: card.type
+      type: card.type,
+      uid: card.uid
     }
   })
 }

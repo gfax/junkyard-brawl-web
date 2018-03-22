@@ -1,4 +1,6 @@
-.player-card(:class="{ disabled: card.disabled }")
+.player-card(
+  @click="toggleSelect(card)",
+  v-bind:class="{ disabled: card.disabled, selected: card.selected }")
   .front
     p {{ card.name }}
     p {{ card.type.toUpperCase() }}

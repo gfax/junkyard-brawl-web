@@ -2,6 +2,7 @@ const JunkyardBrawl = require('junkyard-brawl')
 const { getPhrase } = require('junkyard-brawl/src/language')
 const { getGame, getSocket, setGame, setSocket } = require('../state')
 const { scrubGameData, scrubPlayerData } = require('../util')
+const uuid = require('uuid/v4')
 
 module.exports = (socket, { player }) => {
   let game = getGame(socket.gameId)
@@ -15,6 +16,8 @@ module.exports = (socket, { player }) => {
     generateAnnounceCallback(socket),
     generateWhisperCallback(socket)
   )
+  // Patch in some unique IDs to appease Vue
+  game.deck.forEach(card => (card.uid = uuid()))
   game.id = socket.gameId
   setGame(socket.gameId, game)
   game.announce('game:created')
@@ -40,7 +43,7 @@ function generateAnnounceCallback(socket) {
           } catch (err) {}
 
           playerSocket.send(JSON.stringify([code, {
-            game: scrubGameData(game),
+            game: scrubGameData(game, playerSocket),
             message: newMessage || message,
             // Send updated personal info
             player: scrubPlayerData(player)
@@ -73,7 +76,7 @@ function generateWhisperCallback(socket) {
     const playerSocket = getSocket(playerId)
     if (playerSocket) {
       playerSocket.send(JSON.stringify(code, {
-        game: scrubGameData(game),
+        game: scrubGameData(game, playerSocket),
         message: getPhrase(code, (playerSocket.language || game.language))(messageProps),
         player: scrubPlayerData(messageProps.player)
       }))

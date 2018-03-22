@@ -8,3 +8,7 @@ div
   button(@click="start", type="button", v-if="!started") Start
   button(@click="stop", type="button", v-if="started && !stopped") Stop
   button(@click="addBot", type="button") Add bot
+  button(@click="play", type="button") Play
+  button(@click="pass", type="button") Pass
+  hr
+  game-log(:log="activityLog")

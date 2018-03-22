@@ -3,4 +3,5 @@ div
   player-card(
     :card="card",
     :disabled="false",
+    :key="card.uid",
     v-for="card in hand")

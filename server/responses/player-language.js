@@ -5,8 +5,8 @@ module.exports = (socket, { language }) => {
   socket.language = language
 }
 
-module.exports.validator = (value) => {
-  return getSupportedLanguages().find(lang => lang === value)
+module.exports.validator = (payload) => {
+  return getSupportedLanguages().find(lang => lang === payload)
 }
 
 const languages = getSupportedLanguages().join(', ')

@@ -44,6 +44,8 @@ function connection(ws, req) {
       'game:start': require('./responses/game-start'),
       'player:bot': require('./responses/player-bot'),
       'player:join': require('./responses/player-join'),
+      'player:pass': require('./responses/player-pass'),
+      'player:play': require('./responses/player-play'),
       'player:language': require('./responses/player-language')
     }
     if (codes[code]) {

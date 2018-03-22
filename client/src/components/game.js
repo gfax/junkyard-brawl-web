@@ -6,22 +6,20 @@ let ws = null
 module.exports = require('vue').component('game', {
   data,
   methods: {
-    addBot: function addBot() {
-      console.log('(local) adding bot!')
-      ws.send(JSON.stringify(['player:bot']))
-    },
-    start: function start() {
-      console.log('(local) starting game!')
-      ws.send(JSON.stringify(['game:start']))
-    },
-    stop: function stop() {
-      console.log('(local) stopping game!')
-      ws.send(JSON.stringify(['game:stop']))
-    }
+    addBot,
+    pass,
+    play,
+    start,
+    stop
   },
   mounted,
   template: require('./game.pug')()
 })
+
+function addBot() {
+  console.log('(local) adding bot!')
+  ws.send(JSON.stringify(['player:bot']))
+}
 
 function data() {
   return {
@@ -49,24 +47,7 @@ function data() {
       }
     ],
     player: {
-      hand: [
-        {
-          id: 'gut-punch',
-          name: 'Gut Punch',
-          type: 'attack'
-        },
-        {
-          disabled: true,
-          id: 'block',
-          name: 'Block',
-          type: 'counter'
-        },
-        {
-          id: 'a-gun',
-          name: 'A Gun',
-          type: 'unstoppable'
-        }
-      ],
+      hand: [],
       hp: 8,
       maxHp: 10
     },
@@ -101,7 +82,15 @@ function onMessage({ data: msg }) {
   }
 
   if (payload.player) {
-    vm.player.hand = payload.player.hand
+    vm.player.hand = payload.player.hand.map((card) => {
+      return Object.assign(card, {
+        selected: false
+      })
+    })
+  }
+
+  if (payload.message) {
+    vm.activityLog.unshift(payload.message)
   }
 
   if (codes[code]) {
@@ -109,4 +98,25 @@ function onMessage({ data: msg }) {
   }
 
   console.log(code, payload)
+}
+
+function pass() {
+  ws.send(JSON.stringify(['player:pass']))
+}
+
+function play() {
+  ws.send(JSON.stringify([
+    'player:play',
+    this.player.hand.filter(card => card.selected)
+  ]))
+}
+
+function start() {
+  console.log('(local) starting game!')
+  ws.send(JSON.stringify(['game:start']))
+}
+
+function stop() {
+  console.log('(local) stopping game!')
+  ws.send(JSON.stringify(['game:stop']))
 }
